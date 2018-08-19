@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GWG_ABND18_home2mars_News_App_1</string>
+    <string name="ReadMore">Read More</string>
+    <string name="no_network_available">No Network Available</string>
+    <string name="please_check_network_settings_and_refresh">Please Check Network Settings and Refresh</string>
+    <string name="no_news_available">No News Available</string>
+    <string name="please_check_back_later_or_refresh">Please Check Back Later or Refresh</string>
+</resources>
+
+
+
+

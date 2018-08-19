@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Copied from P6 Walkthrough-->
+<!--https://www.youtube.com/watch?v=Ai4JhyyFxcQ-->
+
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewsActivity"
+    > <!--end of ConstraintLayout opening tag-->
+
+    <!-- DEFAULT LIST VIEW FOR NEWS ARTICLES-->
+    <!-- This is the ListView in which the JSON is parsed to -->
+    <ListView
+        android:id="@+id/news_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- DEFAULT VIEW FOR INITIAL DATA LOADING-->
+    <!-- This is the view for the initial loading delay as JSON is parsed -->
+    <RelativeLayout
+        android:id="@+id/news_loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_centerInParent="true"
+            android:alpha="0.75"
+            android:src="@drawable/android_background"/>
+        <ProgressBar
+            android:id="@+id/news_loading_progress"
+            android:layout_width="375dp"
+            android:layout_height="375dp"
+            android:indeterminate="true"
+            android:layout_centerInParent="true"
+            android:theme="@style/AppTheme"/>
+    </RelativeLayout>
+
+    <!-- DEFAULT VIEW FOR NO NETWORK AVAILABLE-->
+    <!-- This view is displayed when a network connection is not established -->
+    <RelativeLayout
+        android:id="@+id/news_no_network_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_centerInParent="true"
+            android:alpha="0.85"
+            android:src="@drawable/android_background"/>
+        <TextView
+            android:id="@+id/no_network_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/other_text_size_18"
+            android:text="@string/no_network_available"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/please_check_network"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/no_network_message"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="italic|bold"
+            android:text="@string/please_check_network_settings_and_refresh"/>
+    </RelativeLayout>
+
+    <!-- DEFAULT VIEW FOR EMPTY DATA -->
+    <!-- This view acts as the faded background for all views -->
+    <RelativeLayout
+        android:id="@+id/empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_centerInParent="true"
+            android:alpha="0.25"
+            android:src="@drawable/android_background"/>
+    </RelativeLayout>
+
+    <!-- DEFAULT VIEW FOR NO NEWS AVAILABLE -->
+    <!-- This view only displays when there is no news to display from the API Query -->
+    <RelativeLayout
+        android:id="@+id/news_no_news_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_centerInParent="true"
+            android:alpha="0.85"
+            android:src="@drawable/android_background"/>
+        <TextView
+            android:id="@+id/no_news_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/other_text_size_18"
+            android:text="@string/no_news_available"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/please_check_later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/no_news_message"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="italic|bold"
+            android:text="@string/please_check_back_later_or_refresh"/>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

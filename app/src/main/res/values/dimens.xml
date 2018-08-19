@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="news_item_margin_bottom">8dp</dimen>
+    <dimen name="news_item_margin_top">8dp</dimen>
+    <dimen name="news_item_margin_left">8dp</dimen>
+    <dimen name="news_item_margin_right">8dp</dimen>
+    <dimen name="news_item_padding">6dp</dimen>
+
+    <dimen name="article_margin_top">4dp</dimen>
+    <dimen name="article_section_textsize">22sp</dimen>
+    <dimen name="article_title_textsize">26sp</dimen>
+    <dimen name="article_byline_textsize">22sp</dimen>
+    <dimen name="article_date_textsize">18sp</dimen>
+    <dimen name="article_readmore_textsize">18sp</dimen>
+
+    <dimen name="toolbar_elevation">4sp</dimen>
+    <dimen name="other_text_size_18">18sp</dimen>
+
+</resources>

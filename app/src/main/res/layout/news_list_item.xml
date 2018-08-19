@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/news_item_margin_bottom"
+    android:layout_marginTop="@dimen/news_item_margin_top"
+    android:padding="@dimen/news_item_padding"
+    > <!--end of LinearLayout opening tag-->
+
+    <TextView
+        android:id="@+id/article_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/article_margin_top"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/article_section_textsize"
+        tools:text="Section"
+        /> <!--end of TextView-->
+
+    <TextView
+        android:id="@+id/article_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/article_margin_top"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/article_title_textsize"
+        tools:text="This is the spaceholder for a news article tile that could be quite long and go on and on and on"
+        /> <!--end of TextView-->
+
+    <TextView
+        android:id="@+id/article_byline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/article_margin_top"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/article_byline_textsize"
+        tools:text="By (authors)"
+        /> <!--end of TextView-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/news_item_margin_left"
+        > <!--end of RelativeLayout opening tag-->
+
+        <TextView
+            android:id="@+id/article_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:textSize="@dimen/article_date_textsize"
+            tools:text="Date is this long"
+            /> <!--end of TextView-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/news_item_margin_right"
+            android:layout_alignParentEnd="true"
+            android:textSize="@dimen/article_readmore_textsize"
+            android:textColor="@color/colorAccent"
+            android:text="@string/ReadMore"
+            /> <!--end of TextView-->
+
+    </RelativeLayout>
+</LinearLayout>
+
+
