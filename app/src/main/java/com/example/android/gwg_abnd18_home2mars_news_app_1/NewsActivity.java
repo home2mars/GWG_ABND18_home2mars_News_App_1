@@ -21,9 +21,12 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     private static final String LOG_TAG = NewsActivity.class.getName();
 
-    /** URL for news articles data from The Guardian Newspaper dataset */
+    /**
+     * URL for news articles data from The Guardian Newspaper dataset
+     * https://medium.com/code-better/hiding-api-keys-from-your-android-repository-b23f5598b906
+     */
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?show-fields=byline&api-key=4969c08a-4ffb-4d9c-98d1-eb9c65ad2134";
+            "https://content.guardianapis.com/search?show-fields=byline&api-key=" + BuildConfig.ApiKey;
 
     /**
      * Constant value for the news loader ID. We can choose any integer.
@@ -34,11 +37,14 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     /** Adapter for the list of news articles */
     private NewsArticleAdapter mAdapter;
 
-    //ListView newsListView;
-    RelativeLayout emptyLayout;
+    private ListView newsListView;
+    private RelativeLayout emptyLayout;
     private RelativeLayout noNewsLayout;
     private RelativeLayout noNetworkLayout;
-    private RelativeLayout loadingLoayout;
+    private RelativeLayout loadingLayout;
+
+    private ConnectivityManager connMgr;
+    private NetworkInfo networkInfo;
 
 
     @Override
@@ -46,10 +52,9 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_activity);
 
-        // Find a reference to the {@link ListView} in the layout
-        ListView newsListView = (ListView) findViewById(R.id.news_list);
-
-        loadingLoayout = (RelativeLayout) findViewById(R.id.news_loading_layout);
+        // Find references to the in the layout
+        newsListView = (ListView) findViewById(R.id.news_list);
+        loadingLayout = (RelativeLayout) findViewById(R.id.news_loading_layout);
         noNetworkLayout = (RelativeLayout) findViewById(R.id.news_no_network_layout);
         emptyLayout = (RelativeLayout) findViewById(R.id.empty_layout);
         noNewsLayout = (RelativeLayout) findViewById(R.id.news_no_news_layout);
@@ -83,11 +88,11 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         });
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager connMgr = (ConnectivityManager)
+        connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Get details on the currently active default data network
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        networkInfo = connMgr.getActiveNetworkInfo();
 
         // If there is a network connection, fetch data
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -101,13 +106,36 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
-            //View loadingIndicator = findViewById(R.id.loading_indicator);
-            //loadingIndicator.setVisibility(View.GONE);
-            loadingLoayout.setVisibility(View.GONE);
+            loadingLayout.setVisibility(View.GONE);
             emptyLayout.setVisibility(View.GONE);
+            noNewsLayout.setVisibility(View.GONE);
 
             // Update empty state with no connection error message
-            //mEmptyStateTextView.setText(R.string.no_internet_connection);
+            noNetworkLayout.setVisibility(View.VISIBLE);
+        }// Get a reference to the ConnectivityManager to check state of network connectivity
+        connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Get details on the currently active default data network
+        networkInfo = connMgr.getActiveNetworkInfo();
+
+        // If there is a network connection, fetch data
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // Get a reference to the LoaderManager, in order to interact with loaders.
+            LoaderManager loaderManager = getLoaderManager();
+
+            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+            // because this activity implements the LoaderCallbacks interface).
+            loaderManager.initLoader(NEWS_LOADER_ID, null, this);
+        } else {
+            // Otherwise, display error
+            // First, hide loading indicator so error message will be visible
+            loadingLayout.setVisibility(View.GONE);
+            emptyLayout.setVisibility(View.GONE);
+            noNewsLayout.setVisibility(View.GONE);
+
+            // Update empty state with no connection error message
             noNetworkLayout.setVisibility(View.VISIBLE);
         }
     }
@@ -121,13 +149,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public void onLoadFinished(Loader<List<NewsArticle>> loader, List<NewsArticle> newsArticles) {
         // Hide loading indicator because the data has been loaded
-        //View loadingIndicator = findViewById(R.id.loading_indicator);
-        //loadingIndicator.setVisibility(View.GONE);
-        loadingLoayout.setVisibility(View.GONE);
-        //emptyLayout.setVisibility(View.GONE);
-
-        // Set empty state text to display "No news found."
-        //mEmptyStateTextView.setText(R.string.no_news_available);
+        loadingLayout.setVisibility(View.GONE);
 
         // Clear the adapter of previous news articles data
         mAdapter.clear();
@@ -136,9 +158,13 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         // data set. This will trigger the ListView to update.
         if (newsArticles != null && !newsArticles.isEmpty()) {
             mAdapter.addAll(newsArticles);
-        }
-        else {
-            noNewsLayout.setVisibility(View.VISIBLE);
+        } else {
+            networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                noNewsLayout.setVisibility(View.VISIBLE);
+            } else {
+                noNetworkLayout.setVisibility(View.VISIBLE);
+            }
         }
     }
 

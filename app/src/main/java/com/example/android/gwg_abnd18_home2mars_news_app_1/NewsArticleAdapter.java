@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * An {@link NewsArticleAdapter} knows how to create a list item layout for each news article
  * in the data source (a list of {@link NewsArticle} objects).
- *
+ * <p>
  * These list item layouts will be provided to an adapter view like ListView
  * to be displayed to the user.
  */
@@ -23,7 +23,7 @@ public class NewsArticleAdapter extends ArrayAdapter<NewsArticle> {
     /**
      * Constructs a new {@link NewsArticleAdapter}.
      *
-     * @param context of the app
+     * @param context      of the app
      * @param newsArticles is the list of newsArticles, which is the data source of the adapter
      */
     public NewsArticleAdapter(Context context, List<NewsArticle> newsArticles) {
@@ -61,13 +61,12 @@ public class NewsArticleAdapter extends ArrayAdapter<NewsArticle> {
         TextView articleBylineView = (TextView) listItemView.findViewById(R.id.article_byline);
         //check if byline (author) info is available, if not, set TextView to invisible
         String byline = currentNewsArticle.getByline();
-            if (byline == null || byline == ""){
-                articleBylineView.setVisibility(View.GONE);
-            }
-            else {
-                // Display the byline of the current news article in that TextView
-                articleBylineView.setText(byline);
-            }
+        if (byline.equals(null) || byline.equals("")) {
+            articleBylineView.setVisibility(View.GONE);
+        } else {
+            // Display the byline of the current news article in that TextView
+            articleBylineView.setText(byline);
+        }
 
         // Find the TextView with view ID date
         TextView dateView = (TextView) listItemView.findViewById(R.id.article_date);
@@ -75,11 +74,10 @@ public class NewsArticleAdapter extends ArrayAdapter<NewsArticle> {
         String articleDate = currentNewsArticle.getDate();
         if (articleDate == null || articleDate == "") {
             dateView.setText("");
-        }
-        else {
+        } else {
             // Format the date string (i.e. "2018-08-19" from 2018-08-19T20:08:56Z)
             // Display the date of the current news article in that TextView
-            dateView.setText(articleDate.substring(0,9));
+            dateView.setText(articleDate.substring(0, 9));
         }
 
         // Return the list item view that is now showing the appropriate data

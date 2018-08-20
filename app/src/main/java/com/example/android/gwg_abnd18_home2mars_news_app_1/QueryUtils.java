@@ -106,7 +106,7 @@ public final class QueryUtils {
 
             // If the request was successful (response code 200),
             // then read the input stream and parse the response.
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -165,33 +165,33 @@ public final class QueryUtils {
         try {
 
             // Create a JSONObject from the JSON response string
-            JSONObject baseJsonResponse = new JSONObject(newsArticleJSON).getJSONObject("response");
+            JSONObject baseJsonResponse = new JSONObject(newsArticleJSON).optJSONObject("response");
 
             // Extract the JSONArray associated with the key called "results",
             // which represents a list of results (or news articles).
-            JSONArray newsArticleArray = baseJsonResponse.getJSONArray("results");
+            JSONArray newsArticleArray = baseJsonResponse.optJSONArray("results");
 
             // For each news article in the newsArticleArray, create an {@link NewsArticle} object
             for (int i = 0; i < newsArticleArray.length(); i++) {
 
                 // Get a single news article at position i within the list of news articles
-                JSONObject currentArticle = newsArticleArray.getJSONObject(i);
+                JSONObject currentArticle = newsArticleArray.optJSONObject(i);
 
                 // Extract the value for the key called "webTitle"
-                String webTitle = currentArticle.getString("webTitle");
+                String webTitle = currentArticle.optString("webTitle");
 
                 // Extract the value for the key called "sectionName"
-                String sectionName = currentArticle.getString("sectionName");
+                String sectionName = currentArticle.optString("sectionName");
 
                 // Extract the value for the key called "webPublicationDate"
-                String webPublicationDate = currentArticle.getString("webPublicationDate");
+                String webPublicationDate = currentArticle.optString("webPublicationDate");
 
                 // Extract the value for the key called "webUrl"
-                String webUrl = currentArticle.getString("webUrl");
+                String webUrl = currentArticle.optString("webUrl");
 
                 // Extract the value for the key called "byline"
-                JSONObject fields = currentArticle.getJSONObject("fields");
-                String byline = fields.getString("byline");
+                JSONObject fields = currentArticle.optJSONObject("fields");
+                String byline = fields.optString("byline");
 
                 // Create a new {@link NewsArticle} object with the title, section, byline, date
                 // and url from the JSON response.

@@ -11,9 +11,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', "ApiKey", GWG_ABND18_home2mars_News_App_1_Guardian_API
+            resValue 'string', "api_key", GWG_ABND18_home2mars_News_App_1_Guardian_API
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "ApiKey", GWG_ABND18_home2mars_News_App_1_Guardian_API
+            resValue 'string', "api_key", GWG_ABND18_home2mars_News_App_1_Guardian_API
         }
     }
 }
